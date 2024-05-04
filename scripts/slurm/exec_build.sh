@@ -2,7 +2,7 @@
 #
 # scripts/slurm/exec_build.sh
 #
-# Copyright (C) 2017-2023 Tactical Computing Laboratories, LLC
+# Copyright (C) 2017-2024 Tactical Computing Laboratories, LLC
 # All Rights Reserved
 # contact@tactcomplabs.com
 #
@@ -18,7 +18,7 @@ SLURM_ID=`sbatch -N1 --export=ALL $SCRIPT | awk '{print $4}'`
 
 #-- wait for completion
 COMPLETE=`squeue -u $USER | grep ${SLURM_ID}`
-while [ -n "$COMPLETE" ]; do
+while [[ -n $COMPLETE ]]; do
   sleep 1
   COMPLETE=`squeue -u $USER | grep ${SLURM_ID}`
 done
@@ -31,7 +31,7 @@ STATE=`cat rev.jenkins.${SLURM_ID}.out | grep "tests failed out of"`
 NUM_FAILED=`cat rev.jenkins.${SLURM_ID}.out | grep "tests failed out of" | awk '{print $4}'`
 
 
-if [ "$NUM_FAILED" -eq "0" ];
+if [[ $NUM_FAILED -eq 0 ]];
 then
   echo "TEST PASSED FOR JOB_ID = ${JOB_ID}; SLURM_JOB=${SLURM_ID}"
   echo $STATE

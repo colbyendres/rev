@@ -1,5 +1,5 @@
 //
-// _RevProcPasskey_h_
+// _RevCorePasskey_h_
 //
 // Copyright (C) 2017-2024 Tactical Computing Laboratories, LLC
 // All Rights Reserved
@@ -8,18 +8,18 @@
 // See LICENSE in the top level directory for licensing details
 //
 
-
 #ifndef __REV_PROC_PASSKEY__
 #define __REV_PROC_PASSKEY__
-namespace SST::RevCPU{
-  
+
+namespace SST::RevCPU {
+
 template<typename T>
-class RevProcPasskey{
-  private:
+class RevCorePasskey {
+private:
   friend T;
-  RevProcPasskey() {};
-  RevProcPasskey(const RevProcPasskey&) {};
-  RevProcPasskey& operator=(const RevProcPasskey&) = delete;
+  RevCorePasskey(){};
+  RevCorePasskey( const RevCorePasskey& ){};
+  RevCorePasskey& operator=( const RevCorePasskey& ) = delete;
 };
-}
+}  // namespace SST::RevCPU
 #endif
