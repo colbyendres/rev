@@ -12,10 +12,11 @@
 
 .PHONY: src
 
-EXAMPLE=dfs
+EXAMPLE=topo_sort
 CC=$(RVCC)
 ARCH=rv64gc
-INCLUDE=-I../../../../common/syscalls -I../../env -I../../common
+INCLUDE= -I../../env  -I../../common
+
 all: $(EXAMPLE).exe
 
 $(EXAMPLE).exe: $(EXAMPLE).c dataset1.h

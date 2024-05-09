@@ -12,10 +12,11 @@
 
 .PHONY: src
 
-EXAMPLE=dfs
+EXAMPLE=bfs_mwe
 CC=$(RVCC)
 ARCH=rv64gc
-INCLUDE=-I../../../../common/syscalls -I../../env -I../../common
+INCLUDE= -I../../../include -I../../../../common/syscalls -I../../../syscalls/printf
+
 all: $(EXAMPLE).exe
 
 $(EXAMPLE).exe: $(EXAMPLE).c dataset1.h

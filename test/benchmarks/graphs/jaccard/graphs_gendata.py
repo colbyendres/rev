@@ -21,7 +21,7 @@ def print_arr(a, n):
 		print()
 
 # Computes all Jaccard coefficients for G, defined as:
-# J(u,v) = |N(u) ? N(v)| / (d(u)+d(v)-|N(u) ? N(v)|)
+# J(u,v) = |N(u) \cap N(v)| / (d(u)+d(v)-|N(u) \cup N(v)|)
 # where N(u) is the neighborhood of u, and d(u) its degree
 def jaccard(G, n):
 	jacc = (G @ G.T).astype(float) # Computes intersection of N(i) and N(j)

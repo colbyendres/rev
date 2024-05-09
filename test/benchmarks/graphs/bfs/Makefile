@@ -15,11 +15,11 @@
 EXAMPLE=bfs
 CC=$(RVCC)
 ARCH=rv64gc
-
+INCLUDE= -I../../../../common/syscalls -I../../env -I../../common -I../../../include
 all: $(EXAMPLE).exe
 
 $(EXAMPLE).exe: $(EXAMPLE).c dataset1.h
-	$(CC) -I../../../../common/syscalls -I../../env -I../../common -march=$(ARCH) -O0 -static -o $(EXAMPLE).exe $(EXAMPLE).c
+	$(CC) $(INCLUDE) -march=$(ARCH) -O0 -static -o $(EXAMPLE).exe $(EXAMPLE).c
 
 clean:
 	rm -Rf $(EXAMPLE).exe
