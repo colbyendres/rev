@@ -12,15 +12,15 @@
 
 .PHONY: src
 
-EXAMPLE=bfs_mwe
+EXAMPLE=bfs
 CC=$(RVCC)
 ARCH=rv64gc
-INCLUDE= -I../../../include -I../../../../common/syscalls -I../../../syscalls/printf
+INCLUDE=
 
 all: $(EXAMPLE).exe
 
-$(EXAMPLE).exe: $(EXAMPLE).c dataset1.h
-	$(CC) $(INCLUDE) -march=$(ARCH) -O0 -static -o $(EXAMPLE).exe $(EXAMPLE).c
+$(EXAMPLE).exe: $(EXAMPLE).cpp dataset1.hpp
+	$(CC) $(INCLUDE) -march=$(ARCH) -O0 -static -o $(EXAMPLE).exe $(EXAMPLE).cpp
 
 clean:
 	rm -Rf $(EXAMPLE).exe
