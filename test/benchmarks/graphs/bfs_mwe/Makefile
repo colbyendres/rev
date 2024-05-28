@@ -13,14 +13,14 @@
 .PHONY: src
 
 EXAMPLE=bfs
-CC=$(RVCC)
+CXX=$(RVCXX)
 ARCH=rv64gc
 INCLUDE=
 
 all: $(EXAMPLE).exe
 
 $(EXAMPLE).exe: $(EXAMPLE).cpp dataset1.hpp
-	$(CC) $(INCLUDE) -march=$(ARCH) -O0 -static -o $(EXAMPLE).exe $(EXAMPLE).cpp
+	$(CXX) $(INCLUDE) -march=$(ARCH) -O0 -static -o $(EXAMPLE).exe $(EXAMPLE).cpp
 
 clean:
 	rm -Rf $(EXAMPLE).exe
