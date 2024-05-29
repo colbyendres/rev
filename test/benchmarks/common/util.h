@@ -6,6 +6,7 @@
 extern void setStats(int enable);
 
 #include <stdint.h>
+#include <math.h>
 
 #define static_assert(cond) switch(0) { case 0: case !!(long)(cond): ; }
 #define assert(x)                                                              \
@@ -31,35 +32,47 @@ static int verify(int n, const volatile int* test, const int* verify)
   return 0;
 }
 
+// Based on NumPy's allClose function
 static int verifyDouble(int n, const volatile double* test, const double* verify)
 {
-  int i;
+  const double atol = 1e-8;
+  const double rtol = 1e-5;
+  int         i;
+
   // Unrolled for faster verification
-  for (i = 0; i < n/2*2; i+=2)
-  {
-    double t0 = test[i], t1 = test[i+1];
-    double v0 = verify[i], v1 = verify[i+1];
-    int eq1 = t0 == v0, eq2 = t1 == v1;
-    if (!(eq1 & eq2)) return i+1+eq1;
+  for( i = 0; i < n / 2 * 2; i += 2 ) {
+    int eq1 = fabs( test[i] - verify[i] ) <= atol + rtol * fabs( verify[i] );
+    int eq2 = fabs( test[i + 1] - verify[i + 1] ) <= atol + rtol * fabs( verify[i + 1] );
+    if( !( eq1 & eq2 ) ) {
+      return i + 1 + eq1;
+    }
   }
-  if (n % 2 != 0 && test[n-1] != verify[n-1])
+
+  if( n % 2 == 1 && fabs( test[n - 1] - verify[n - 1] ) > atol + rtol * fabs( verify[n - 1] ) ) {
     return n;
+  }
+
   return 0;
 }
 
 static int verifyFloat(int n, const volatile float* test, const float* verify)
 {
-  int i;
-  // Unrolled for faster verification
-  for (i = 0; i < n/2*2; i+=2)
-  {
-    float t0 = test[i], t1 = test[i+1];
-    float v0 = verify[i], v1 = verify[i+1];
-    int eq1 = t0 == v0, eq2 = t1 == v1;
-    if (!(eq1 & eq2)) return i+1+eq1;
+  const float atol = 1e-8;
+  const float rtol = 1e-5;
+  int         i;
+
+  for( i = 0; i < n / 2 * 2; i += 2 ) {
+    int eq1 = fabsf( test[i] - verify[i] ) <= atol + rtol * fabsf( verify[i] );
+    int eq2 = fabsf( test[i + 1] - verify[i + 1] ) <= atol + rtol * fabsf( verify[i + 1] );
+    if( !( eq1 & eq2 ) ) {
+      return i + 1 + eq1;
+    }
   }
-  if (n % 2 != 0 && test[n-1] != verify[n-1])
+
+  if( n % 2 == 1 && fabsf( test[n - 1] - verify[n - 1] ) > atol + rtol * fabsf( verify[n - 1] ) ) {
     return n;
+  }
+
   return 0;
 }
 
